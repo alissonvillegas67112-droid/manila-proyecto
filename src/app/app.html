@@ -1,0 +1,13 @@
+<app-navegacion></app-navegacion>
+
+<main class="contenido">
+
+  @if (esRutaInicio) {
+    <app-inicio></app-inicio>
+  }
+
+  <router-outlet></router-outlet>
+
+</main>
+
+<app-footer></app-footer>

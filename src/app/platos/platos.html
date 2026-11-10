@@ -1,0 +1,106 @@
+<section class="cabecera-pagina">
+  <p class="etiqueta">Nuestra carta</p>
+  <h1>Platos</h1>
+  <p>
+    Platos preparados al momento con ingredientes frescos. Explora las
+    categorías o busca por nombre e ingrediente.
+  </p>
+</section>
+
+<section class="seccion pagina-platos">
+
+  <div class="contenedor">
+
+    <div class="buscador">
+      <input
+        type="text"
+        name="busqueda"
+        [(ngModel)]="busqueda"
+        placeholder="Buscar platos..."
+        (keyup.enter)="buscar()"
+      >
+      <select name="tipoBusqueda" [(ngModel)]="tipoBusqueda">
+        <option value="nombre">Por nombre</option>
+        <option value="ingrediente">Por ingrediente</option>
+      </select>
+      <button class="boton boton-dorado" type="button" (click)="buscar()">Buscar</button>
+      <button class="boton boton-secundario" type="button" (click)="limpiarBusqueda()">Limpiar</button>
+    </div>
+
+    <div class="filtros">
+      @for (categoria of categorias; track categoria) {
+        <button
+          type="button"
+          class="filtro"
+          [class.activo]="categoria === categoriaSeleccionada"
+          (click)="seleccionarCategoria(categoria)"
+        >
+          {{ categoria }}
+        </button>
+      }
+    </div>
+
+    @if (cargando) {
+      <p class="estado">Cargando platos...</p>
+    }
+
+    @if (error) {
+      <p class="estado error">{{ error }}</p>
+    }
+
+    @if (!cargando && !error) {
+      @if (platos.length > 0) {
+        <div class="lista-tarjetas">
+          @for (plato of platos; track plato.id) {
+            <article class="tarjeta">
+              <img [src]="plato.imagen" [alt]="plato.nombre">
+
+              <div class="tarjeta-contenido">
+                <div class="tarjeta-titulo">
+                  <h2>{{ plato.nombre }}</h2>
+                  <span class="precio">{{ precioService.formatearPrecio(plato.precio) }}</span>
+                </div>
+
+                @if (plato.ingredientes.length > 0) {
+                  <p class="ingredientes">{{ plato.ingredientes.slice(0, 4).join(' · ') }}</p>
+                } @else {
+                  <p class="ingredientes">Consulta los ingredientes en el detalle.</p>
+                }
+
+                <div class="acciones-tarjeta">
+                  <button class="boton boton-secundario" type="button" (click)="verDetalle(plato)">
+                    Ver detalle
+                  </button>
+                  <button class="boton boton-carrito" type="button" (click)="agregarAlCarrito(plato)">
+                    Agregar al carrito
+                  </button>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <p class="estado">No se encontraron platos con esa búsqueda.</p>
+      }
+    }
+
+    @if (mensajeCarrito) {
+      <div class="mensaje">{{ mensajeCarrito }}</div>
+    }
+
+    <p class="nota-catalogo">
+      Precios en pesos colombianos (COP). Los precios se mantienen estables
+      para cada producto.
+    </p>
+
+  </div>
+
+</section>
+
+<app-detalle-producto
+  [producto]="detalle"
+  [cargando]="cargandoDetalle"
+  [error]="errorDetalle"
+  (cerrar)="cerrarDetalle()"
+  (agregar)="agregarAlCarrito($event)"
+></app-detalle-producto>

@@ -1,0 +1,133 @@
+<section class="cabecera-pagina">
+  <p class="etiqueta">Para acompañar</p>
+  <h1>Bebidas</h1>
+  <p>
+    Cócteles, vinos y bebidas sin alcohol. Filtra por tipo o categoría,
+    o busca por nombre e ingrediente.
+  </p>
+</section>
+
+<section class="seccion pagina-bebidas">
+
+  <div class="contenedor">
+
+    <div class="buscador">
+      <input
+        type="text"
+        name="busqueda"
+        [(ngModel)]="busqueda"
+        placeholder="Buscar bebidas..."
+        (keyup.enter)="buscar()"
+      >
+      <select name="tipoBusqueda" [(ngModel)]="tipoBusqueda">
+        <option value="nombre">Por nombre</option>
+        <option value="ingrediente">Por ingrediente</option>
+      </select>
+      <button class="boton boton-dorado" type="button" (click)="buscar()">Buscar</button>
+      <button class="boton boton-secundario" type="button" (click)="limpiarBusqueda()">Limpiar</button>
+    </div>
+
+    <p class="filtro-titulo">Tipo de bebida</p>
+    <div class="filtros">
+      <button
+        type="button"
+        class="filtro"
+        [class.activo]="filtroAlcohol === 'Alcoholic'"
+        (click)="seleccionarAlcohol('Alcoholic')"
+      >
+        Alcohólicas
+      </button>
+      <button
+        type="button"
+        class="filtro"
+        [class.activo]="filtroAlcohol === 'Non_Alcoholic'"
+        (click)="seleccionarAlcohol('Non_Alcoholic')"
+      >
+        Sin alcohol
+      </button>
+    </div>
+
+    <p class="filtro-titulo">Categoría</p>
+    <div class="filtros">
+      <button
+        type="button"
+        class="filtro"
+        [class.activo]="filtroCategoria === 'Ordinary_Drink'"
+        (click)="seleccionarCategoria('Ordinary_Drink')"
+      >
+        Ordinary Drink
+      </button>
+      <button
+        type="button"
+        class="filtro"
+        [class.activo]="filtroCategoria === 'Cocktail'"
+        (click)="seleccionarCategoria('Cocktail')"
+      >
+        Cocktail
+      </button>
+    </div>
+
+    @if (cargando) {
+      <p class="estado">Cargando bebidas...</p>
+    }
+
+    @if (error) {
+      <p class="estado error">{{ error }}</p>
+    }
+
+    @if (!cargando && !error) {
+      @if (bebidas.length > 0) {
+        <div class="lista-tarjetas">
+          @for (bebida of bebidas; track bebida.id) {
+            <article class="tarjeta">
+              <img [src]="bebida.imagen" [alt]="bebida.nombre">
+
+              <div class="tarjeta-contenido">
+                <div class="tarjeta-titulo">
+                  <h2>{{ bebida.nombre }}</h2>
+                  <span class="precio">{{ precioService.formatearPrecio(bebida.precio) }}</span>
+                </div>
+
+                @if (bebida.ingredientes.length > 0) {
+                  <p class="ingredientes">{{ bebida.ingredientes.slice(0, 4).join(' · ') }}</p>
+                } @else {
+                  <p class="ingredientes">Consulta los ingredientes en el detalle.</p>
+                }
+
+                <div class="acciones-tarjeta">
+                  <button class="boton boton-secundario" type="button" (click)="verDetalle(bebida)">
+                    Ver detalle
+                  </button>
+                  <button class="boton boton-carrito" type="button" (click)="agregarAlCarrito(bebida)">
+                    Agregar al carrito
+                  </button>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <p class="estado">No se encontraron bebidas con esa búsqueda.</p>
+      }
+    }
+
+    @if (mensajeCarrito) {
+      <div class="mensaje">{{ mensajeCarrito }}</div>
+    }
+
+    <p class="nota-catalogo">
+      Precios en pesos colombianos (COP). Los precios se mantienen estables
+      para cada producto.
+    </p>
+
+  </div>
+
+</section>
+
+<app-detalle-producto
+  [producto]="detalle"
+  [cargando]="cargandoDetalle"
+  [error]="errorDetalle"
+  (cerrar)="cerrarDetalle()"
+  (agregar)="agregarAlCarrito($event)"
+></app-detalle-producto>

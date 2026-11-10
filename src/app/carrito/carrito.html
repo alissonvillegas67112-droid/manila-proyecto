@@ -1,0 +1,154 @@
+<section class="cabecera-pagina">
+  <p class="etiqueta">Tu pedido</p>
+  <h1>Carrito</h1>
+  <p>
+    Revisa los productos de tu pedido, ajusta las cantidades y completa tus
+    datos para generar el PDF de la compra.
+  </p>
+</section>
+
+<section class="seccion">
+
+  <div class="contenedor carrito-contenido">
+
+    <div class="carrito-productos">
+
+      <h2>Productos del carrito</h2>
+
+      @if (items.length === 0) {
+        <div class="carrito-vacio">
+          <p>
+            Tu carrito está vacío. Próximamente podrás agregar tus platos y
+            bebidas favoritos.
+          </p>
+          <div class="enlaces-vacio">
+            <a routerLink="/platos" class="boton boton-verde">Ver platos</a>
+            <a routerLink="/bebidas" class="boton boton-secundario">Ver bebidas</a>
+          </div>
+        </div>
+      } @else {
+        <div class="lista-carrito">
+          @for (item of items; track item.producto.id) {
+            <article class="item-carrito">
+              <img [src]="item.producto.imagen" [alt]="item.producto.nombre">
+
+              <div class="item-datos">
+                <span class="tipo">{{ item.producto.tipo === 'comida' ? 'Comida' : 'Bebida' }}</span>
+                <h3>{{ item.producto.nombre }}</h3>
+                <p>Precio unitario: {{ precioService.formatearPrecio(item.producto.precio) }}</p>
+              </div>
+
+              <div class="item-cantidad">
+                <button type="button" (click)="disminuir(item)" aria-label="Disminuir cantidad">−</button>
+                <span>{{ item.cantidad }}</span>
+                <button type="button" (click)="aumentar(item)" aria-label="Aumentar cantidad">+</button>
+              </div>
+
+              <div class="item-subtotal">
+                <span>Subtotal</span>
+                <strong>{{ precioService.formatearPrecio(item.producto.precio * item.cantidad) }}</strong>
+              </div>
+
+              <button class="eliminar" type="button" (click)="eliminar(item)">Eliminar</button>
+            </article>
+          }
+        </div>
+
+        <div class="carrito-acciones">
+          <button class="boton boton-secundario" type="button" (click)="vaciarCarrito()">
+            Vaciar carrito
+          </button>
+        </div>
+      }
+
+      <div class="resumen-compra">
+        <h2>Resumen de compra</h2>
+
+        <div class="resumen-linea">
+          <span>Productos seleccionados</span>
+          <span>{{ items.length }}</span>
+        </div>
+
+        <div class="resumen-linea">
+          <span>Cantidades</span>
+          <span>{{ unidades }}</span>
+        </div>
+
+        <div class="resumen-linea">
+          <span>Subtotal</span>
+          <span>{{ precioService.formatearPrecio(total) }}</span>
+        </div>
+
+        <div class="resumen-linea resumen-total">
+          <span>Total de la compra</span>
+          <span>{{ precioService.formatearPrecio(total) }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <form class="formulario-carrito" (ngSubmit)="realizarPedido()">
+
+      <h2>Datos del cliente</h2>
+
+      <div class="campo">
+        <label for="nombre">Nombre completo</label>
+        <input
+          id="nombre"
+          type="text"
+          name="nombre"
+          [(ngModel)]="cliente.nombre"
+          placeholder="Tu nombre"
+          required
+        >
+      </div>
+
+      <div class="campo">
+        <label for="celular">Celular</label>
+        <input
+          id="celular"
+          type="tel"
+          name="celular"
+          [(ngModel)]="cliente.celular"
+          placeholder="321 2324343"
+          required
+        >
+      </div>
+
+      <div class="campo">
+        <label for="direccion">Dirección de entrega</label>
+        <input
+          id="direccion"
+          type="text"
+          name="direccion"
+          [(ngModel)]="cliente.direccion"
+          placeholder="Av. 123 Manizales"
+          required
+        >
+      </div>
+
+      <div class="acciones">
+        <button type="submit" class="boton boton-dorado">Realizar pedido</button>
+        <button type="button" class="boton boton-secundario" (click)="limpiarCliente()">
+          Limpiar datos
+        </button>
+      </div>
+
+      @if (error) {
+        <div class="mensaje error">{{ error }}</div>
+      }
+
+      @if (mensaje) {
+        <div class="mensaje">{{ mensaje }}</div>
+      }
+
+      <p class="nota-carrito">
+        Al realizar el pedido se descargará un PDF con el resumen de la compra.
+        Este proyecto es una demostración y no envía datos a ningún servidor.
+      </p>
+
+    </form>
+
+  </div>
+
+</section>

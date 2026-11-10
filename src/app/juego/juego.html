@@ -1,0 +1,59 @@
+<section class="cabecera-pagina">
+  <p class="etiqueta">Diversión</p>
+  <h1>Juego Manila</h1>
+  <p>
+    Encuentra la imagen del plato y la imagen de la bebida escondidas en una
+    matriz de 4 × 4. Cuando las encuentres, el juego empezará de nuevo con
+    posiciones diferentes.
+  </p>
+</section>
+
+<section class="seccion">
+  <div class="contenedor juego-contenido">
+
+    <div class="objetivos">
+      <div class="objetivo">
+        <img [src]="imagenComida" alt="Plato que debes encontrar">
+        <span>Plato</span>
+      </div>
+      <div class="objetivo">
+        <img [src]="imagenBebida" alt="Bebida que debes encontrar">
+        <span>Bebida</span>
+      </div>
+    </div>
+
+    <div class="juego-acciones">
+      <button class="boton boton-dorado" type="button" (click)="jugar()">
+        {{ juegoActivo ? 'Jugar de nuevo' : 'Jugar' }}
+      </button>
+      <p class="mensaje-juego" [class.exito]="juegoTerminado">{{ mensaje }}</p>
+    </div>
+
+    <div class="tablero" role="grid" aria-label="Matriz de 4 por 4">
+      @for (casilla of casillas; track casilla.id) {
+        <button
+          type="button"
+          class="casilla"
+          [class.descubierta]="casilla.descubierta"
+          [class.comida]="casilla.descubierta && casilla.tipo === 'comida'"
+          [class.bebida]="casilla.descubierta && casilla.tipo === 'bebida'"
+          [disabled]="!juegoActivo || juegoTerminado || casilla.descubierta"
+          [attr.aria-label]="'Casilla ' + casilla.id"
+          (click)="descubrir(casilla)"
+        >
+          @if (casilla.descubierta) {
+            <img [src]="obtenerImagen(casilla)" [alt]="obtenerNombre(casilla)">
+          } @else {
+            <span class="interrogante">?</span>
+          }
+        </button>
+      }
+    </div>
+
+    <p class="pista">
+      Si haces clic en una casilla equivocada aparecerá el mensaje
+      "Intenta de nuevo". Las imágenes siempre cambian de posición.
+    </p>
+
+  </div>
+</section>

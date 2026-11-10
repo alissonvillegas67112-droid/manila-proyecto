@@ -1,0 +1,359 @@
+/* Estilos generales del Restaurante Manila */
+
+:root {
+  --verde-oscuro: #1d3b2f;
+  --verde: #2f5d46;
+  --crema: #f8f2e6;
+  --beige: #e7dac5;
+  --marron: #5a3a29;
+  --dorado: #c8a24a;
+  --dorado-claro: #e6c97a;
+  --texto: #2c2a26;
+  --texto-suave: #6b6258;
+  --blanco: #fffdf8;
+  --sombra: 0 10px 30px rgba(29, 59, 47, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--crema);
+  color: var(--texto);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--verde-oscuro);
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 3rem;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2.2rem;
+  line-height: 1.2;
+}
+
+p {
+  margin-top: 0;
+}
+
+a {
+  color: var(--verde);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.contenedor {
+  width: 90%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.seccion {
+  padding: 70px 0;
+}
+
+.seccion-alterna {
+  background-color: var(--blanco);
+}
+
+.etiqueta {
+  color: var(--dorado);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.boton {
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.boton-dorado {
+  background-color: var(--dorado);
+  color: var(--verde-oscuro);
+}
+
+.boton-dorado:hover {
+  background-color: var(--dorado-claro);
+}
+
+.boton-verde {
+  background-color: var(--verde-oscuro);
+  color: var(--crema);
+}
+
+.boton-verde:hover {
+  background-color: var(--verde);
+}
+
+.boton-claro {
+  border-color: var(--crema);
+  color: var(--crema);
+}
+
+.boton-claro:hover {
+  background-color: var(--crema);
+  color: var(--verde-oscuro);
+}
+
+.boton-secundario {
+  border-color: var(--verde-oscuro);
+  color: var(--verde-oscuro);
+}
+
+.boton-secundario:hover {
+  background-color: var(--verde-oscuro);
+  color: var(--crema);
+}
+
+.cabecera-pagina {
+  background-color: var(--verde-oscuro);
+  color: var(--crema);
+  padding: 70px 20px 60px;
+  text-align: center;
+}
+
+.cabecera-pagina h1 {
+  color: var(--crema);
+  margin-bottom: 15px;
+}
+
+.cabecera-pagina p {
+  color: #e8dfcf;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 620px;
+}
+
+.lista-tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  justify-content: center;
+}
+
+.tarjeta {
+  background-color: var(--blanco);
+  border-radius: 12px;
+  box-shadow: var(--sombra);
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  width: calc(33.333% - 19px);
+}
+
+.tarjeta:hover {
+  box-shadow: 0 16px 36px rgba(29, 59, 47, 0.18);
+  transform: translateY(-6px);
+}
+
+.tarjeta img {
+  height: 220px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.tarjeta-contenido {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 22px;
+}
+
+.tarjeta-titulo {
+  align-items: baseline;
+  border-bottom: 1px solid var(--beige);
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+}
+
+.tarjeta-titulo h2 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.precio {
+  color: var(--marron);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.boton-carrito {
+  background-color: var(--verde-oscuro);
+  color: var(--crema);
+}
+
+.boton-carrito:hover {
+  background-color: var(--verde);
+}
+
+.buscador {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.buscador input,
+.buscador select {
+  background-color: var(--blanco);
+  border: 1px solid var(--beige);
+  border-radius: 6px;
+  color: var(--texto);
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 11px 12px;
+}
+
+.buscador input {
+  flex: 1 1 260px;
+}
+
+.filtro-titulo {
+  color: var(--marron);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.filtro {
+  background-color: transparent;
+  border: 1px solid var(--beige);
+  border-radius: 20px;
+  color: var(--verde-oscuro);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 7px 14px;
+}
+
+.filtro:hover {
+  border-color: var(--dorado);
+}
+
+.filtro.activo {
+  background-color: var(--verde-oscuro);
+  border-color: var(--verde-oscuro);
+  color: var(--crema);
+}
+
+.estado {
+  color: var(--texto-suave);
+  margin: 30px 0;
+  text-align: center;
+}
+
+.estado.error {
+  color: #a33a2b;
+}
+
+.ingredientes {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+.acciones-tarjeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.acciones-tarjeta .boton {
+  flex: 1;
+  font-size: 0.85rem;
+  padding: 10px 12px;
+}
+
+.mensaje.error {
+  background-color: #f7e5e1;
+  border-left-color: #a33a2b;
+  color: #7d2a1f;
+}
+
+.tarjeta-contenido p {
+  color: var(--texto-suave);
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+.mensaje {
+  background-color: #e6f0e8;
+  border-left: 5px solid var(--verde);
+  border-radius: 6px;
+  color: var(--verde-oscuro);
+  margin-top: 20px;
+  padding: 14px 18px;
+}
+
+
+@media (max-width: 900px) {
+  .tarjeta {
+    width: calc(50% - 14px);
+  }
+}
+
+@media (max-width: 620px) {
+  h1 {
+    font-size: 2.3rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .seccion {
+    padding: 50px 0;
+  }
+
+  .tarjeta {
+    width: 100%;
+  }
+}

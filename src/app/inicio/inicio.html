@@ -1,0 +1,191 @@
+<section class="hero">
+
+  <div>
+    <p class="etiqueta">Restaurante Manila</p>
+    <h1>MANILA</h1>
+    <p class="lema">
+      Cocina contemporánea con sabores que invitan a compartir.
+    </p>
+    <div class="hero-botones">
+      <a routerLink="/carrito" class="boton boton-dorado">Ir al carrito</a>
+      <a routerLink="/platos" class="boton boton-claro">Ver la carta</a>
+    </div>
+  </div>
+
+</section>
+
+<section class="seccion">
+
+  <div class="contenedor bienvenida-contenido">
+
+    <div class="texto-bienvenida">
+      <p class="etiqueta">Bienvenidos</p>
+      <h2>Una experiencia para los sentidos</h2>
+      <p>
+        Manila es un restaurante de cocina contemporánea que combina técnicas
+        con ingredientes frescos. Un espacio cálido, de
+        luces bajas y sabores intensos, pensado para compartir.
+      </p>
+      <p>
+        Nuestra propuesta gastronómica se basa en una carta corta, preparada al
+        momento y acompañada de una coctelería de autor. Cada plato busca
+        equilibrar tradición, textura y presentación.
+      </p>
+    </div>
+
+    <div class="datos">
+      <h3>Horario</h3>
+      <p>Martes a domingo<br>12:00 - 23:00</p>
+      <h3>Ubicación</h3>
+      <p>Av. 123<br>Manizales</p>
+      <h3>Contacto</h3>
+      <p>+57 321 2324343</p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="seccion galeria">
+
+  <div class="contenedor">
+
+    <div class="titulo-seccion">
+      <p class="etiqueta">Galería</p>
+      <h2>Nuestro ambiente</h2>
+    </div>
+
+    <div class="carrusel">
+      <img [src]="imagenes[indice].imagen" [alt]="imagenes[indice].titulo">
+
+      <div class="carrusel-texto">
+        <h3>{{ imagenes[indice].titulo }}</h3>
+        <p>{{ imagenes[indice].texto }}</p>
+      </div>
+
+      <button class="control anterior" type="button" (click)="anterior()" aria-label="Imagen anterior">
+        &#10094;
+      </button>
+      <button class="control siguiente" type="button" (click)="siguiente()" aria-label="Imagen siguiente">
+        &#10095;
+      </button>
+    </div>
+
+    <div class="indicadores">
+      @for (imagen of imagenes; track imagen.titulo; let i = $index) {
+        <button
+          type="button"
+          [class.activo]="i === indice"
+          (click)="irA(i)"
+          aria-label="Ver imagen"
+        ></button>
+      }
+    </div>
+
+  </div>
+
+</section>
+
+<section class="seccion">
+
+  <div class="contenedor destacado-contenido">
+
+    <div class="destacado-imagen">
+      @if (platoDestacado) {
+        <img [src]="platoDestacado.imagen" [alt]="platoDestacado.nombre">
+      } @else {
+        <div class="destacado-placeholder">Plato destacado</div>
+      }
+    </div>
+
+    <div class="destacado-texto">
+      <p class="etiqueta">El plato estrella</p>
+
+      @if (cargandoPlato) {
+        <h2>Cargando plato...</h2>
+        <p>Estamos consultando la API de comidas.</p>
+      } @else if (errorPlato) {
+        <h2>No disponible</h2>
+        <p>{{ errorPlato }}</p>
+        <button class="boton boton-secundario" type="button" (click)="cargarPlatoDestacado()">
+          Reintentar
+        </button>
+      } @else if (platoDestacado) {
+        <h2>{{ platoDestacado.nombre }}</h2>
+        <p>{{ platoDestacado.ingredientes.slice(0, 5).join(' · ') }}</p>
+        <p class="precio-destacado">{{ precioService.formatearPrecio(platoDestacado.precio) }}</p>
+        <a routerLink="/platos" class="boton boton-verde">Ver todos los platos</a>
+      }
+    </div>
+
+  </div>
+
+</section>
+
+<section class="seccion destacado-invertido">
+
+  <div class="contenedor destacado-contenido">
+
+    <div class="destacado-texto">
+      <p class="etiqueta">La bebida estrella</p>
+
+      @if (cargandoBebida) {
+        <h2>Cargando bebida...</h2>
+        <p>Estamos consultando la API de bebidas.</p>
+      } @else if (errorBebida) {
+        <h2>No disponible</h2>
+        <p>{{ errorBebida }}</p>
+        <button class="boton boton-secundario" type="button" (click)="cargarBebidaDestacada()">
+          Reintentar
+        </button>
+      } @else if (bebidaDestacada) {
+        <h2>{{ bebidaDestacada.nombre }}</h2>
+        <p>{{ bebidaDestacada.ingredientes.slice(0, 5).join(' · ') }}</p>
+        <p class="precio-destacado">{{ precioService.formatearPrecio(bebidaDestacada.precio) }}</p>
+        <a routerLink="/bebidas" class="boton boton-verde">Ver todas las bebidas</a>
+      }
+    </div>
+
+    <div class="destacado-imagen">
+      @if (bebidaDestacada) {
+        <img [src]="bebidaDestacada.imagen" [alt]="bebidaDestacada.nombre">
+      } @else {
+        <div class="destacado-placeholder">Bebida destacada</div>
+      }
+    </div>
+
+  </div>
+
+</section>
+
+<section class="seccion accesos">
+
+  <div class="contenedor">
+
+    <div class="titulo-seccion">
+      <p class="etiqueta">Explora</p>
+      <h2>¿Qué te apetece hoy?</h2>
+    </div>
+
+    <div class="tarjetas-acceso">
+
+      <a routerLink="/platos" class="acceso acceso-platos">
+        <span>Platos</span>
+        <small>Sabores de la casa</small>
+      </a>
+
+      <a routerLink="/bebidas" class="acceso acceso-bebidas">
+        <span>Bebidas</span>
+        <small>Coctelería y vinos</small>
+      </a>
+
+      <a routerLink="/carrito" class="acceso acceso-carrito">
+        <span>Carrito</span>
+        <small>Prepara tu pedido</small>
+      </a>
+
+    </div>
+
+  </div>
+
+</section>

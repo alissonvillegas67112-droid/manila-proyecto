@@ -1,0 +1,50 @@
+@if (cargando || producto || error) {
+  <div class="fondo-modal">
+
+    <div class="modal-detalle">
+
+      <button class="cerrar" type="button" (click)="cerrarModal()" aria-label="Cerrar detalle">
+        ×
+      </button>
+
+      @if (cargando) {
+        <div class="modal-contenido">
+          <p class="estado">Cargando detalle del producto...</p>
+        </div>
+      } @else if (error) {
+        <div class="modal-contenido">
+          <p class="estado error">{{ error }}</p>
+          <button class="boton boton-secundario" type="button" (click)="cerrarModal()">
+            Cerrar
+          </button>
+        </div>
+      } @else if (producto) {
+        <img [src]="producto.imagen" [alt]="producto.nombre">
+
+        <div class="modal-contenido">
+          <p class="etiqueta">{{ producto.tipo === 'comida' ? 'Comida' : 'Bebida' }}</p>
+          <h2>{{ producto.nombre }}</h2>
+          <p class="precio-detalle">{{ precioService.formatearPrecio(producto.precio) }}</p>
+
+          <h3>Ingredientes</h3>
+
+          @if (producto.ingredientes.length > 0) {
+            <ul class="lista-ingredientes">
+              @for (ingrediente of producto.ingredientes; track ingrediente) {
+                <li>{{ ingrediente }}</li>
+              }
+            </ul>
+          } @else {
+            <p class="estado">No hay ingredientes disponibles.</p>
+          }
+
+          <button class="boton boton-dorado" type="button" (click)="agregarAlCarrito()">
+            Agregar al carrito
+          </button>
+        </div>
+      }
+
+    </div>
+
+  </div>
+}
